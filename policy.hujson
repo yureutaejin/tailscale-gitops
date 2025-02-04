@@ -1,0 +1,44 @@
+{
+	"groups": {
+		"group:admin": ["jyjin5460@gmail.com"],
+	},
+	"tagOwners": {
+		"tag:admin":        ["jyjin5460@gmail.com"],
+		"tag:server":       ["jyjin5460@gmail.com"],
+		"tag:gitops-agent": ["jyjin5460@gmail.com"],
+	},
+	"acls": [
+		{
+			"action": "accept",
+			"src":    ["group:admin"],
+			"dst":    ["tag:server:*"],
+		},
+		{
+			"action": "accept",
+			"src":    ["tag:admin", "tag:server"],
+			"dst":    ["tag:server:*"],
+		},
+	],
+	"ssh": [
+		{
+			"action":      "check",
+			"src":         ["autogroup:member"],
+			"dst":         ["autogroup:self"],
+			"users":       ["autogroup:nonroot", "root"],
+			"checkPeriod": "always",
+		},
+		{
+			"action":      "check",
+			"src":         ["group:admin"],
+			"dst":         ["tag:server", "tag:admin"],
+			"users":       ["autogroup:nonroot", "root"],
+			"checkPeriod": "always",
+		},
+		{
+			"action": "accept",
+			"src":    ["tag:admin"],
+			"dst":    ["tag:server"],
+			"users":  ["autogroup:nonroot", "root"],
+		},
+	],
+}
